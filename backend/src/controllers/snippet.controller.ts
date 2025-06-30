@@ -28,7 +28,7 @@ export const createSnippet = async (req: AuthRequest, res: Response): Promise<vo
 
 export async function getSnippets(req: AuthRequest, res: Response): Promise<void> {
 try {
-    const snippets = await Snippet.find({ createdBy: req.user?.email });
+    const snippets = await Snippet.find({ ownerEmail: req.user?.email });
     res.status(200).json(snippets);
 } catch (error) {
     console.error('Error fetching snippets:', error);
