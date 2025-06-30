@@ -7,7 +7,6 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(authRoutes);
-app.use(snippetRoutes);
-
+app.use('/auth', authRoutes);
+app.use('/snippets', snippetRoutes);
 export default app;
