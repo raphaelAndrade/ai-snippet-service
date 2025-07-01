@@ -30,25 +30,28 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
+
+      - name: Install backend dependencies
         run: npm ci
+        working-directory: ./backend 
 
       - name: Lint code
         run: npm run lint
+        working-directory: ./backend  
 
       - name: Type check
         run: npm run typecheck
+        working-directory: ./backend 
 
       - name: Run tests
         run: npm test
         env:
-          MONGO_URI: mongodb://localhost:27017/ai_snippets 
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}  
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}    
+          MONGO_URI: mongodb://localhost:27017/ai_snippets
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        working-directory: ./backend  
+
 
       - name: Build Docker image
         run: docker build -t ai-snippet-service-backend .
-
-      - name: Deploy Docker container (optional)
-        run: docker run -d -p 3000:3000 ai-snippet-service-backend
-
+        working-directory: ./backend  
