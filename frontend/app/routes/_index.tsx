@@ -6,6 +6,7 @@ import { SnippetForm } from "~/components/SnippetForm";
 import { SnippetList } from "~/components/SnippetList";
 import { StreamingSummary } from "~/components/StreamingSummary";
 import { useAuth } from "~/context/AuthContext";
+import { Navbar } from "~/components/Navbar";
 
 export const meta: MetaFunction = () => {
   return [{ title: "AI Snippet Summarizer" }];
@@ -122,6 +123,7 @@ async function* readStream(reader: ReadableStreamDefaultReader<Uint8Array>) {
 
   return (
     <>
+      <Navbar />
       <main className="bg-emerald-50 min-h-screen p-8 font-sans">
         <div className="max-w-3xl mx-auto bg-white border border-slate-100 p-8 rounded-xl shadow">
           <h1 className="text-3xl font-bold mb-6 text-emerald-900 text-center">
