@@ -5,6 +5,7 @@ import { Snippet } from "~/types/snippet";
 import { SnippetForm } from "~/components/SnippetForm";
 import { SnippetList } from "~/components/SnippetList";
 import { StreamingSummary } from "~/components/StreamingSummary";
+import { useAuth } from "~/context/AuthContext";
 
 export const meta: MetaFunction = () => {
   return [{ title: "AI Snippet Summarizer" }];
@@ -30,7 +31,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Index() {
-  const token  = "";
+  const { token } = useAuth();
   const snippets = useLoaderData<Snippet[]>();
   const [summary, setSummary] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
