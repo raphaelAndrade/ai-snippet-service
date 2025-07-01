@@ -19,7 +19,7 @@ function extractTokenFromCookie(request: Request): string | null {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const token = extractTokenFromCookie(request);
-  if (!token) return;
+  if (!token) return redirect("/login");
 
   const response = await fetch("http://localhost:3000/snippets", {
     headers: { Authorization: `Bearer ${token}` },
