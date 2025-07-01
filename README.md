@@ -29,7 +29,7 @@ Built with a **Remix frontend**, an **Express backend**, **JWT authentication** 
 
 ---
 
-## 🛠️ Local Setup
+## Local Setup
 
 ### Prerequisites
 

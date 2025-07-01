@@ -42,9 +42,13 @@ jobs:
       - name: Run tests
         run: npm test
         env:
-          MONGO_URI: mongodb://localhost:27017/ai_snippets
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MONGO_URI: mongodb://localhost:27017/ai_snippets 
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}  
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}    
 
       - name: Build Docker image
         run: docker build -t ai-snippet-service-backend .
+
+      - name: Deploy Docker container (optional)
+        run: docker run -d -p 3000:3000 ai-snippet-service-backend
+
