@@ -3,6 +3,31 @@ import { AuthRequest } from '../middleware/auth.middleware';
 import Snippet from '../models/snippet.model';
 import { summarizeText, streamSummary } from '../services/gemini.service'
 
+export const streamSnippetSummary = async (req: AuthRequest, res: Response): Promise<void> => {
+    try {
+      const text = req.body.text as string;
+      if (!text) {
+        res.status(400).json({ error: 'Missing text param' });
+        return;
+      }
+  
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+  
+      for await (const chunk of streamSummary(text)) {
+        res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
+      }
+  
+      res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+      res.end();
+    } catch (error) {
+      console.error('SSE error', error);
+      res.write(`event: error\ndata: ${JSON.stringify({ error: 'Streaming failed' })}\n\n`);
+      res.end();
+    }
+  };
+
 export const createSnippet = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
       const { text } = req.body;
