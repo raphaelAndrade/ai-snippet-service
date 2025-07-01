@@ -1,24 +1,32 @@
-import { Form } from "@remix-run/react";
 import { useState } from "react";
 
 interface SnippetFormProps {
-    isSubmitting: boolean
+  onSubmitText: (text: string) => void;
 }
 
-export function SnippetForm({ isSubmitting }: SnippetFormProps) {
-    const [text, setText] = useState("");
-    
+export function SnippetForm({ onSubmitText }: SnippetFormProps) {
+  const [text, setText] = useState("");
+
+  const isEmpty = text.trim().length === 0;
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isEmpty) return;
+
+    onSubmitText(text.trim());
+    setText("");
+  };
+
   return (
-    <Form method="post" className="space-y-4" aria-label="Generate summary form">
+    <form onSubmit={handleSubmit} className="space-y-4" aria-label="Generate summary form">
       <div className="space-y-2">
         <label htmlFor="text" className="block text-sm font-medium text-slate-700">
           Your text to summarize
         </label>
         <textarea
           id="text"
-          name="text"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={e => setText(e.target.value)}
           rows={6}
           placeholder="Paste or write your text here..."
           required
@@ -28,11 +36,15 @@ export function SnippetForm({ isSubmitting }: SnippetFormProps) {
 
       <button
         type="submit"
-        className="w-full px-4 py-2 rounded-lg font-medium transition bg-emerald-700 text-white hover:bg-emerald-800"
-        disabled={isSubmitting}
+        disabled={isEmpty}
+        className={`w-full px-4 py-2 rounded-lg font-medium transition ${
+          isEmpty
+            ? "bg-gray-300 text-white cursor-not-allowed"
+            : "bg-emerald-700 text-white hover:bg-emerald-800"
+        }`}
       >
-        {isSubmitting ? "Summarizing..." : "Generate Summary"}
+        Generate Summary
       </button>
-    </Form>
+    </form>
   );
 }
