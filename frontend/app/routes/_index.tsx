@@ -21,7 +21,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const token = extractTokenFromCookie(request);
   if (!token) return redirect("/login");
 
-  const response = await fetch("http://localhost:3000/snippets", {
+  const response = await fetch("http://backend:3000/snippets", {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -79,7 +79,7 @@ async function streamSummary(text: string): Promise<string> {
       for (const part of parts) {
         if (part.startsWith("data: ")) {
           try {
-            const payload = JSON.parse(part.slice(6)); // remove "data: "
+            const payload = JSON.parse(part.slice(6));
             if (payload.chunk) {
               finalText += payload.chunk;
               setSummary((prev) => prev + payload.chunk);
@@ -91,7 +91,7 @@ async function streamSummary(text: string): Promise<string> {
       }
     }
   } finally {
-    reader.releaseLock(); // clean release
+    reader.releaseLock();
   }
 
   return finalText;
