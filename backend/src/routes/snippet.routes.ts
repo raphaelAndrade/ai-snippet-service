@@ -3,8 +3,9 @@ import { createSnippet, getSnippets, streamSnippetSummary } from '../controllers
 import { authMiddleware } from '../middleware/auth.middleware';
 
 const router = Router();
+
 router.post('/', authMiddleware, createSnippet);
-router.get('/snippets', authMiddleware, getSnippets);
-router.post('/stream', authMiddleware, streamSnippetSummary);
+router.get('/', authMiddleware, getSnippets);
+router.get('/stream', authMiddleware, streamSnippetSummary);
 
 export default router;
