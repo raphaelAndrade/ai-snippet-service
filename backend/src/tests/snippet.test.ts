@@ -10,7 +10,7 @@ let token: string;
 beforeAll(async () => {
   const loginResponse = await request(app)
     .post('/auth/login')
-    .send({ email: 'user@example.com', code: '654321' });
+    .send({ email: 'user1@example.com', code: '123456' });
 
   token = loginResponse.body.token;
   expect(token).toBeDefined();
