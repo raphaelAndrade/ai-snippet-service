@@ -49,9 +49,17 @@ cd ai-snippet-service
 Create a .env file at the project root:
 ```bash
 MONGO_URI=mongodb://mongo:27017/ai_snippets
-GOOGLE_API_KEY=your-gemini-api-key
-JWT_SECRET=your-secret-key
-API_URL=http://localhost:3000
+PORT=3000
+GOOGLE_API_KEY=AIzaSyDC4oMiMlp4DRju1jjKWLsNaOvH1QHaTeA
+JWT_SECRET=aa584f9fa8f6acb14ad6418499b2053cdae27c64aeee69f4c4eaf20562524ac6df8eff6744714950861961c071d89f88f5fea1d3551ba471ca6d54a8e2fea5ae
+
+```
+
+Create a .env file at the root of the frontend folder:
+```bash
+NODE_ENV=development
+API_URL=http://backend:3000
+
 ```
 
 ---
